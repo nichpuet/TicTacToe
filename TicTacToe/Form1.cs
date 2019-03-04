@@ -16,5 +16,26 @@ namespace TicTacToe
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            titleLabel.Visible = false;
+            playButton.Visible = false;
+            closeButton.Visible = false;
+            GameScreen gs = new GameScreen();
+            Form f = this.FindForm();
+            f.Controls.Remove(this);
+            f.Controls.Add(gs);
+        }
     }
 }
