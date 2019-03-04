@@ -37,6 +37,7 @@
             this.BackColor = System.Drawing.Color.BurlyWood;
             this.Name = "GameScreen";
             this.Size = new System.Drawing.Size(500, 500);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameScreen_Paint);
             this.ResumeLayout(false);
 
         }
