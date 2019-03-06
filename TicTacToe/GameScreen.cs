@@ -54,7 +54,7 @@ namespace TicTacToe
             {
                 tempX = 65 * scale;
             }
-            else if (mouseX < 165*scale && mouseX < 115 * scale)
+            else if (mouseX < 165*scale && mouseX > 115 * scale)
             {
                 tempX = 115 * scale;
             }
@@ -67,19 +67,28 @@ namespace TicTacToe
             {
                 tempY = 65 * scale;
             }
-            else if (mouseY < 165 * scale && mouseY < 115 * scale)
+            else if (mouseY < 165 * scale && mouseY > 115 * scale)
             {
                 tempY = 115 * scale;
             }
+
+            testLabel.Text += "\nTempX: " + tempX + "\nTempY: " + tempY;
 
             Tiles playerTile = new Tiles(tempX, tempY, p1Turn);
             if (p1Turn == true)
             {
                 xTiles.Add(playerTile);
-                foreach (Tiles t in blankTiles)
-                {
+                p1Turn = false;
+            }
+            else if (p1Turn == false)
+            {
+                oTiles.Add(playerTile);
+                p1Turn = true;
+            }
 
-                }
+            foreach (Tiles t in blankTiles)
+            {
+                
             }
         }
 
