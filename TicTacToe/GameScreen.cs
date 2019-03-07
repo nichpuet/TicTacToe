@@ -21,7 +21,7 @@ namespace TicTacToe
 
         int mouseX, tempX;
         int mouseY, tempY;
-        int scale = 2;
+        public int scale = 2;
 
         public GameScreen()
         {
@@ -36,6 +36,20 @@ namespace TicTacToe
             e.Graphics.DrawLine(boardPen, 115 * scale, 15 * scale, 115 * scale, 165 * scale);
             e.Graphics.DrawLine(boardPen, 15 * scale, 65 * scale, 165 * scale, 65 * scale);
             e.Graphics.DrawLine(boardPen, 15 * scale, 115 * scale, 165 * scale, 115 * scale);
+
+            Pen xPen = new Pen(Color.Red, 3);
+            Pen oPen = new Pen(Color.Blue, 3);
+
+            foreach(Tiles t in xTiles)
+            {
+                e.Graphics.DrawLine(xPen, t.drawX1, t.drawY1, t.drawX2, t.drawY2);
+                e.Graphics.DrawLine(xPen, t.drawX1 + (40 * scale), t.drawY1, t.drawX2 - (40 * scale), t.drawY2);
+            }
+            foreach(Tiles t in oTiles)
+            {
+                e.Graphics.DrawEllipse(oPen, t.drawX1, t.drawY1, t.drawX2, t.drawY2);
+            }
+         
         }
 
         private void GameScreen_Click(object sender, EventArgs e)
@@ -44,8 +58,7 @@ namespace TicTacToe
             mouseX = mp.X;
             mouseY = mp.Y;
 
-            testLabel.Text = "X: " + mouseX+ "\nY: " + mouseY;
-
+         
             if (mouseX < 65*scale && mouseX > 15*scale)
             {
                 tempX = 15*scale;
@@ -72,24 +85,35 @@ namespace TicTacToe
                 tempY = 115 * scale;
             }
 
-            testLabel.Text += "\nTempX: " + tempX + "\nTempY: " + tempY;
-
             Tiles playerTile = new Tiles(tempX, tempY, p1Turn);
             if (p1Turn == true)
             {
                 xTiles.Add(playerTile);
                 p1Turn = false;
+                foreach(Tiles t in xTiles)
+                {
+                    t.drawTile(t.x, t.y, p1Turn, scale);
+                }
+                
             }
             else if (p1Turn == false)
             {
                 oTiles.Add(playerTile);
                 p1Turn = true;
+                foreach(Tiles l in oTiles)
+                {
+                    l.drawTile(l.x, l.y, p1Turn, scale);
+                }
             }
 
-            foreach (Tiles t in blankTiles)
+            for(int i = 0; i < blankTiles.Count(); i++)
             {
-                
+                if(blankTiles[i].x == tempX && blankTiles[i].y == tempY)
+                {
+                    blankTiles.RemoveAt(i);
+                }
             }
+            Refresh();
         }
 
         private void GameScreen_Load(object sender, EventArgs e)
@@ -109,6 +133,8 @@ namespace TicTacToe
                 Tiles blankTile = new Tiles((15+(50 * i))*scale, 115*scale, true);
                 blankTiles.Add(blankTile);
             }
+
+            
         }
     }
 }
