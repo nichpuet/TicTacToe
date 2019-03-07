@@ -86,6 +86,16 @@ namespace TicTacToe
             }
 
             Tiles playerTile = new Tiles(tempX, tempY, p1Turn);
+
+            for (int i = 0; i < blankTiles.Count(); i++)
+            {
+                if (blankTiles[i].x == tempX && blankTiles[i].y == tempY)
+                {
+                    blankTiles.RemoveAt(i);
+                }
+            }
+
+            
             if (p1Turn == true)
             {
                 xTiles.Add(playerTile);
@@ -105,14 +115,7 @@ namespace TicTacToe
                     l.drawTile(l.x, l.y, p1Turn, scale);
                 }
             }
-
-            for(int i = 0; i < blankTiles.Count(); i++)
-            {
-                if(blankTiles[i].x == tempX && blankTiles[i].y == tempY)
-                {
-                    blankTiles.RemoveAt(i);
-                }
-            }
+                      
             Refresh();
         }
 
