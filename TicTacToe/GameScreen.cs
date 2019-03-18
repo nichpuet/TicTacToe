@@ -23,9 +23,13 @@ namespace TicTacToe
         int mouseY, tempY;
         public int scale = 2;
 
+        bool gameWon = false, spaceDown = false;
+
         public GameScreen()
         {
             InitializeComponent();
+
+            OnStart();
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
@@ -48,26 +52,27 @@ namespace TicTacToe
             foreach(Tiles t in oTiles)
             {
                 e.Graphics.DrawEllipse(oPen, t.drawX1, t.drawY1, t.drawX2, t.drawY2);
-            }
-         
+            }         
         }
 
         private void GameScreen_Click(object sender, EventArgs e)
         {
+
+
             Point mp = this.PointToClient(Cursor.Position);
             mouseX = mp.X;
             mouseY = mp.Y;
 
-         
-            if (mouseX < 65*scale && mouseX > 15*scale)
+
+            if (mouseX < 65 * scale && mouseX > 15 * scale)
             {
-                tempX = 15*scale;
+                tempX = 15 * scale;
             }
-            else if (mouseX < 115*scale && mouseX > 65 * scale)
+            else if (mouseX < 115 * scale && mouseX > 65 * scale)
             {
                 tempX = 65 * scale;
             }
-            else if (mouseX < 165*scale && mouseX > 115 * scale)
+            else if (mouseX < 165 * scale && mouseX > 115 * scale)
             {
                 tempX = 115 * scale;
             }
@@ -118,21 +123,42 @@ namespace TicTacToe
             Refresh();
         }
 
-        private void GameScreen_Load(object sender, EventArgs e)
+        private void GameScreen_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+                    spaceDown = false;
+                    break;
+            }
+        }
+
+        private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+                    spaceDown = true;
+                    break;
+
+            }
+        }
+
+        private void OnStart()
         {
             for (int i = 0; i < 3; i++)
             {
-                Tiles blankTile = new Tiles((15 + (50*i))*scale, 15*scale, true);
+                Tiles blankTile = new Tiles((15 + (50 * i)) * scale, 15 * scale, true);
                 blankTiles.Add(blankTile);
             }
-            for (int i = 0;i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                Tiles blankTile = new Tiles((15+(50*i))*scale, 65*scale, true);
+                Tiles blankTile = new Tiles((15 + (50 * i)) * scale, 65 * scale, true);
                 blankTiles.Add(blankTile);
             }
-            for (int i = 0;i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                Tiles blankTile = new Tiles((15+(50 * i))*scale, 115*scale, true);
+                Tiles blankTile = new Tiles((15 + (50 * i)) * scale, 115 * scale, true);
                 blankTiles.Add(blankTile);
             }
         }
@@ -140,10 +166,92 @@ namespace TicTacToe
         private void WinCheck(bool pTurn)
         {
             int counterX = 0, counterO = 0;
-
-            for(int i = 0; i < xTiles.Count(); i++)
+            for (int k = 0; k < 3; k++)
             {
-                if (xTiles[i].x == 30 && pTurn == true)
+                counterO = 0;
+                counterX = 0;
+                for (int i = 0; i < xTiles.Count(); i++)
+                {
+                    if (xTiles[i].x == 15*scale + (50*scale)*k && pTurn == true)
+                    {
+                        counterX++;
+                    }
+
+                    if (counterX == 3)
+                    {
+                        winLabel.Text = "X's Win";
+                        winLabel.Visible = true;
+                        counterX = 0;
+                        gameWon = true;
+                    }
+                }
+                for (int i = 0; i < oTiles.Count(); i++)
+                {
+                    if (oTiles[i].x == 15*scale + (50 * scale) * k && pTurn == false)
+                    {
+                        counterO++;
+                    }
+
+                    if (counterO == 3)
+                    {
+                        winLabel.Text = "O's Win";
+                        winLabel.Visible = true;
+                        counterX = 0;
+                        gameWon = true;
+                    }
+                }
+            }
+
+            for (int k = 0; k < 3; k++)
+            {
+                counterO = 0;
+                counterX = 0;
+                for (int i = 0; i < xTiles.Count(); i++)
+                {
+                    if (xTiles[i].y == 15*scale + (50 * scale) * k && pTurn == true)
+                    {
+                        counterX++;
+                    }
+
+                    if (counterX == 3)
+                    {
+                        winLabel.Text = "X's Win";
+                        winLabel.Visible = true;
+                        counterX = 0;
+                        gameWon = true;
+                    }
+                }
+                for (int i = 0; i < oTiles.Count(); i++)
+                {
+                    if (oTiles[i].y == 15*scale + (50 * scale) * k && pTurn == false)
+                    {
+                        counterO++;
+                    }
+
+                    if (counterO == 3)
+                    {
+                        winLabel.Text = "O's Win";
+                        winLabel.Visible = true;
+                        counterX = 0;
+                        gameWon = true;
+                    }
+                }
+            }
+
+            counterX = 0;
+            counterO = 0;
+
+            for (int i = 0; i < xTiles.Count(); i++)
+            {
+                if (xTiles[i].x == 15 * scale && xTiles[i].y == 15 * scale)
+                {
+                    counterX++;
+                }
+                if (xTiles[i].x == 15 * scale + 50 * scale && xTiles[i].y == 15 * scale + 50 * scale)
+                {
+                    counterX++;
+                }
+                if(xTiles[i].x == 15 * scale + 100 * scale && xTiles[i].y == 15 * scale + 100 * scale)
                 {
                     counterX++;
                 }
@@ -153,11 +261,20 @@ namespace TicTacToe
                     winLabel.Text = "X's Win";
                     winLabel.Visible = true;
                     counterX = 0;
+                    gameWon = true;
                 }
             }
-            for(int i = 0;i < oTiles.Count(); i++)
+            for (int i = 0; i < oTiles.Count(); i++)
             {
-                if (oTiles[i].x == 30 && pTurn == false)
+                if (oTiles[i].x == 15 * scale && oTiles[i].y == 15 * scale)
+                {
+                    counterO++;
+                }
+                if (oTiles[i].x == 15 * scale + 50 * scale && oTiles[i].y == 15 * scale + 50 * scale)
+                {
+                    counterO++;
+                }
+                if (oTiles[i].x == 15 * scale + 100 * scale && oTiles[i].y == 15 * scale + 100 * scale)
                 {
                     counterO++;
                 }
@@ -167,7 +284,63 @@ namespace TicTacToe
                     winLabel.Text = "O's Win";
                     winLabel.Visible = true;
                     counterX = 0;
+                    gameWon = true;
                 }
+            }
+
+            counterX = 0;
+            counterO = 0;
+
+            for (int i = 0; i < xTiles.Count(); i++)
+            {
+                if (xTiles[i].x == 15 * scale + 100 * scale && xTiles[i].y == 15 * scale)
+                {
+                    counterX++;
+                }
+                if (xTiles[i].x == 15 * scale + 50 * scale && xTiles[i].y == 15 * scale + 50 * scale)
+                {
+                    counterX++;
+                }
+                if (xTiles[i].x == 15 * scale && xTiles[i].y == 15 * scale + 100 * scale)
+                {
+                    counterX++;
+                }
+
+                if (counterX == 3)
+                {
+                    winLabel.Text = "X's Win";
+                    winLabel.Visible = true;
+                    counterX = 0;
+                    gameWon = true;
+                }
+            }
+            for (int i = 0; i < oTiles.Count(); i++)
+            {
+                if (oTiles[i].x == 230 && oTiles[i].y == 30)
+                {
+                    counterO++;
+                }
+                if (oTiles[i].x == 130 && oTiles[i].y == 130)
+                {
+                    counterO++;
+                }
+                if (oTiles[i].x == 30 && oTiles[i].y == 230)
+                {
+                    counterO++;
+                }
+
+                if (counterO == 3)
+                {
+                    winLabel.Text = "O's Win";
+                    winLabel.Visible = true;
+                    counterX = 0;
+                    gameWon = true;
+                }
+            }
+            if (blankTiles.Count() == 0)
+            {
+                winLabel.Text = "Tie Game";
+                winLabel.Visible = true;
             }
         }
     }

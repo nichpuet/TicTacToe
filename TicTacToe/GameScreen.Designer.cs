@@ -49,9 +49,10 @@
             this.Controls.Add(this.winLabel);
             this.Name = "GameScreen";
             this.Size = new System.Drawing.Size(350, 350);
-            this.Load += new System.EventHandler(this.GameScreen_Load);
             this.Click += new System.EventHandler(this.GameScreen_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameScreen_Paint);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameScreen_KeyUp);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GameScreen_PreviewKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
