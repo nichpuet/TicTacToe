@@ -34,12 +34,15 @@
             // winLabel
             // 
             this.winLabel.AutoSize = true;
-            this.winLabel.Location = new System.Drawing.Point(150, 0);
+            this.winLabel.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.winLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.winLabel.Location = new System.Drawing.Point(112, 9);
             this.winLabel.Name = "winLabel";
-            this.winLabel.Size = new System.Drawing.Size(35, 13);
+            this.winLabel.Size = new System.Drawing.Size(37, 15);
             this.winLabel.TabIndex = 0;
             this.winLabel.Text = "label1";
             this.winLabel.Visible = false;
+            this.winLabel.Click += new System.EventHandler(this.winLabel_Click);
             // 
             // GameScreen
             // 
@@ -51,8 +54,6 @@
             this.Size = new System.Drawing.Size(350, 350);
             this.Click += new System.EventHandler(this.GameScreen_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameScreen_Paint);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameScreen_KeyUp);
-            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GameScreen_PreviewKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
