@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace TicTacToe
 {
@@ -16,6 +17,9 @@ namespace TicTacToe
         List<Tiles> xTiles = new List<Tiles>();
         List<Tiles> oTiles = new List<Tiles>();
         List<Tiles> blankTiles = new List<Tiles>();
+
+        SoundPlayer winSound = new SoundPlayer(Properties.Resources.gong);
+        SoundPlayer clickSound = new SoundPlayer(Properties.Resources.jabSound);
 
         bool pTurn = true;
 
@@ -117,6 +121,7 @@ namespace TicTacToe
                                 l.drawTile(l.x, l.y, pTurn, scale);
                             }
                         }
+                        clickSound.Play();
                     }
                 }
                 WinCheck();
@@ -187,7 +192,7 @@ namespace TicTacToe
                         winLabel.Visible = true;
                         counterX = 0;
                         gameWon = true;
-                        break;
+                        winSound.Play();
                     }
                 }
                 
@@ -204,6 +209,7 @@ namespace TicTacToe
                         winLabel.Visible = true;
                         counterX = 0;
                         gameWon = true;
+                        winSound.Play();
                     }
                 }
 
@@ -227,6 +233,7 @@ namespace TicTacToe
                         winLabel.Visible = true;
                         counterX = 0;
                         gameWon = true;
+                        winSound.Play();
                     }
                 }
                 for (int i = 0; i < oTiles.Count(); i++)
@@ -242,6 +249,7 @@ namespace TicTacToe
                         winLabel.Visible = true;
                         counterX = 0;
                         gameWon = true;
+                        winSound.Play();
                     }
                 }
             }
@@ -270,6 +278,7 @@ namespace TicTacToe
                     winLabel.Visible = true;
                     counterX = 0;
                     gameWon = true;
+                    winSound.Play();
                 }
             }
             for (int i = 0; i < oTiles.Count(); i++)
@@ -293,6 +302,7 @@ namespace TicTacToe
                     winLabel.Visible = true;
                     counterX = 0;
                     gameWon = true;
+                    winSound.Play();
                 }
             }
 
@@ -320,6 +330,7 @@ namespace TicTacToe
                     winLabel.Visible = true;
                     counterX = 0;
                     gameWon = true;
+                    winSound.Play();
                 }
             }
             for (int i = 0; i < oTiles.Count(); i++)
@@ -343,13 +354,15 @@ namespace TicTacToe
                     winLabel.Visible = true;
                     counterX = 0;
                     gameWon = true;
+                    winSound.Play();
                 }
             }
-            if (blankTiles.Count() == 0)
+            if (blankTiles.Count() == 0 && gameWon == false)
             {
                 winLabel.Text = "Tie Game. Click This to Reset";
                 winLabel.Visible = true;
                 gameWon = true;
+                winSound.Play();
             }
         }
     }
