@@ -72,6 +72,7 @@
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.playButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "TicTacToe";
             this.Load += new System.EventHandler(this.Form1_Load);

@@ -13,14 +13,16 @@ namespace TicTacToe
 {
     public partial class GameScreen : UserControl
     {
-
+        //Setting up lists for use later
         List<Tiles> xTiles = new List<Tiles>();
         List<Tiles> oTiles = new List<Tiles>();
         List<Tiles> blankTiles = new List<Tiles>();
 
+        //Setting up sounds for later
         SoundPlayer winSound = new SoundPlayer(Properties.Resources.gong);
         SoundPlayer clickSound = new SoundPlayer(Properties.Resources.jabSound);
 
+        //Setting up variables for later
         bool pTurn = true;
 
         int mouseX, tempX;
@@ -38,13 +40,14 @@ namespace TicTacToe
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            
+            //Drawing the board
             Pen boardPen = new Pen(Color.Black, 5);
-            e.Graphics.DrawLine(boardPen, 65*scale, 15*scale, 65*scale,165*scale);
+            e.Graphics.DrawLine(boardPen, 65 * scale, 15 * scale, 65 * scale,165 * scale);
             e.Graphics.DrawLine(boardPen, 115 * scale, 15 * scale, 115 * scale, 165 * scale);
             e.Graphics.DrawLine(boardPen, 15 * scale, 65 * scale, 165 * scale, 65 * scale);
             e.Graphics.DrawLine(boardPen, 15 * scale, 115 * scale, 165 * scale, 115 * scale);
 
+            //Drawing any x's and o's in their seperate lists (Using goofy math)
             Pen xPen = new Pen(Color.Red, 3);
             Pen oPen = new Pen(Color.Blue, 3);
 
@@ -61,6 +64,7 @@ namespace TicTacToe
 
         private void GameScreen_Click(object sender, EventArgs e)
         {
+            //When the screen is click it checks the section clicked and places either an x or o in its list.
             if (gameWon == false)
             {
                 Point mp = this.PointToClient(Cursor.Position);
@@ -96,6 +100,7 @@ namespace TicTacToe
 
                 Tiles playerTile = new Tiles(tempX, tempY, pTurn);
 
+                //This only happens if there IS a blank tile in the blankTiles list
                 for (int i = 0; i < blankTiles.Count(); i++)
                 {
                     if (blankTiles[i].x == tempX && blankTiles[i].y == tempY)
@@ -121,9 +126,11 @@ namespace TicTacToe
                                 l.drawTile(l.x, l.y, pTurn, scale);
                             }
                         }
+                        //plays a sound whenever a x or o is placed
                         clickSound.Play();
                     }
                 }
+                //checks if anyone has won
                 WinCheck();
                 Refresh();
             }
@@ -131,6 +138,7 @@ namespace TicTacToe
 
         private void winLabel_Click(object sender, EventArgs e)
         {
+            //if the winCheck comes back positive the click resets the screen
             if (gameWon == true)
             {
                 Reset();
@@ -139,6 +147,7 @@ namespace TicTacToe
 
         private void Reset()
         {
+            //clears all the list and board before redrawing and establishing the blankTiles list again
             xTiles.Clear();
             oTiles.Clear();
             blankTiles.Clear();
@@ -156,6 +165,7 @@ namespace TicTacToe
 
         private void OnStart()
         {
+            //puts the 3x3 of tiles in the blankTiles list 
             for (int i = 0; i < 3; i++)
             {
                 Tiles blankTile = new Tiles((15 + (50 * i)) * scale, 15 * scale, true);
@@ -172,7 +182,7 @@ namespace TicTacToe
                 blankTiles.Add(blankTile);
             }
         }
-
+        //Checks each row of the table for a winner, then checks each column, after checks each diaganol.
         private void WinCheck()
         {
             int counterX = 0, counterO = 0;
@@ -366,4 +376,4 @@ namespace TicTacToe
             }
         }
     }
-}
+} 
