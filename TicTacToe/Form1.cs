@@ -24,11 +24,13 @@ namespace TicTacToe
 
         private void closeButton_Click(object sender, EventArgs e)
         {
+            //if exit is clicked close the program
             this.Close();
         }
 
         private void playButton_Click(object sender, EventArgs e)
         {
+            //if play is clicked switch screens to the gamescreen
             titleLabel.Visible = false;
             playButton.Visible = false;
             closeButton.Visible = false;
