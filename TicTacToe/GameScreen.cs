@@ -71,7 +71,7 @@ namespace TicTacToe
                 mouseX = mp.X;
                 mouseY = mp.Y;
 
-
+                //Sets the tempX/Y used to make the tiles to the corners of the tile they are placed in based off where you clicked
                 if (mouseX < 65 * scale && mouseX > 15 * scale)
                 {
                     tempX = 15 * scale;
